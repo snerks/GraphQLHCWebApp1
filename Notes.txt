@@ -1,0 +1,83 @@
+mutation CreateReviewForEpisode($ep: Episode!, $review: ReviewInput!) {
+  createReview(episode: $ep, review: $review) {
+    stars
+    commentary
+  }
+}
+
+mutation UpdatePersonOperation {
+  updatePerson(input: { id: "CEDE12CA-1F95-41BA-9998-C771473F6B5C", firstName: "John", lastName: "Smith"}) {
+    firstName
+  }
+}
+
+
+mutation UpdatePerson($updatePersonInput: UpdatePersonInput!) {
+  updatePerson(input: $updatePersonInput) {
+    firstName
+  }
+}
+
+
+{
+  "updatePersonInput": {
+    "id": "CEDE12CA-1F95-41BA-9998-C771473F6B5C",
+    "firstName": "Bob",
+    "lastName": "Smith"
+  }
+}
+
+=============================================================================================
+Works
+=============================================================================================
+Using inline variables
+
+No mutation name:
+Parameter names not quoted
+
+mutation {
+  updatePerson(input: { id: "CEDE12CA-1F95-41BA-9998-C771473F6B5C", firstName: "John", lastName: "Smith"}) {
+    firstName
+  }
+}
+
+With mutation name (can be anything):
+mutation UpdatePersonOperation {
+  updatePerson(input: { id: "CEDE12CA-1F95-41BA-9998-C771473F6B5C", firstName: "John", lastName: "Smith"}) {
+    firstName
+  }
+}
+
+Guid format?:
+
+Hot Chocolate v10 
+CEDE12CA-1F95-41BA-9998-C771473F6B5C
+or
+Hot Chocolate v11 
+CEDE12CA1F9541BA9998C771473F6B5C
+---------------------------------------------------------------------------------------------------------------
+Using external Variables:
+
+mutation UpdatePerson($updatePersonInput: UpdatePersonInput!) {
+  updatePerson(input: $updatePersonInput) {
+    firstName
+  }
+}
+
+External variables:
+Root element name (updatePersonInput) must match $[PARAMETER_NAME] on mutation line ($updatePersonInput)
+JSON - so Parameter names must be quoted
+
+{
+  	"updatePersonInput": { "id": "CEDE12CA-1F95-41BA-9998-C771473F6B5C", "firstName": "John", "lastName": "Smith"}
+}
+
+OR formatted
+
+{
+  "updatePersonInput": {
+    "id": "CEDE12CA-1F95-41BA-9998-C771473F6B5C",
+    "firstName": "Bob",
+    "lastName": "Smith"
+  }
+}
